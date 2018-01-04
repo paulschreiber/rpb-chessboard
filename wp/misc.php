@@ -26,32 +26,32 @@
 abstract class RPBChessboardMisc {
 
 	public static function register() {
-		add_action( 'wp_ajax_rpbchessboard_format_pieceset_sprite', array( __CLASS__, 'callbackFormatPiecesetSprite' ) );
-		add_action( 'delete_attachment', array( __CLASS__, 'callbackDeleteAttachment' ) );
+		add_action( 'wp_ajax_rpbchessboard_format_pieceset_sprite', array( __CLASS__, 'callback_dormat_pieceset_sprite' ) );
+		add_action( 'delete_attachment', array( __CLASS__, 'callback_delete_attachment' ) );
 
-		add_filter( 'upload_mimes', array( __CLASS__, 'callbackFilterMimeTypes' ) );
+		add_filter( 'upload_mimes', array( __CLASS__, 'callback_filter_mime_types' ) );
 	}
 
 
-	public static function callbackFormatPiecesetSprite() {
+	public static function callback_dormat_pieceset_sprite() {
 		check_ajax_referer( 'rpbchessboard_format_pieceset_sprite' );
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die();
 		}
 
-		$ajaxModel = RPBChessboardHelperLoader::loadModel( 'Ajax/FormatPiecesetSprite' );
-		$ajaxModel->run();
+		$ajax_model = RPBChessboardHelperLoader::load_model( 'Ajax/FormatPiecesetSprite' );
+		$ajax_model->run();
 	}
 
 
-	public static function callbackDeleteAttachment( $attachmentId ) {
-		$model = RPBChessboardHelperLoader::loadModel( 'Ajax/RemovePiecesetSprite' );
-		$model->run( $attachmentId );
+	public static function callback_delete_attachment( $attachment_id ) {
+		$model = RPBChessboardHelperLoader::load_model( 'Ajax/RemovePiecesetSprite' );
+		$model->run( $attachment_id );
 	}
 
 
-	public static function callbackFilterMimeTypes( $mimeTypes ) {
-		$mimeTypes['pgn'] = 'text/plain';
-		return $mimeTypes;
+	public static function callback_filter_mime_types( $mime_types ) {
+		$mime_types['pgn'] = 'text/plain';
+		return $mime_types;
 	}
 }

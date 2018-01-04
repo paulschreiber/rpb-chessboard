@@ -31,19 +31,19 @@ abstract class RPBChessboardShortcodes {
 	public static function register() {
 		// Compatibility information -> describe which shortcode should be used to insert FEN diagrams,
 		// which one to insert PGN games, etc...
-		$compatibility               = RPBChessboardHelperLoader::loadModel( 'Common/Compatibility' );
-		$fenShortcode                = $compatibility->getFENShortcode();
-		$pgnShortcode                = $compatibility->getPGNShortcode();
-		self::$noTexturizeShortcodes = array( $fenShortcode, $pgnShortcode );
-		self::$lowLevelShortcodes    = array( $pgnShortcode );
+		$compatibility               = RPBChessboardHelperLoader::load_model( 'Common/Compatibility' );
+		$fen_shortcode                = $compatibility->getFENShortcode();
+		$pgn_shortcode                = $compatibility->getPGNShortcode();
+		self::$no_texturize_shortcodes = array( $fen_shortcode, $pgn_shortcode );
+		self::$low_level_shortcodes    = array( $pgn_shortcode );
 
 		// Register the shortcodes
-		add_shortcode( $fenShortcode, array( __CLASS__, 'callbackShortcodeFEN' ) );
-		add_shortcode( $pgnShortcode, array( __CLASS__, 'callbackShortcodePGN' ) );
-		add_shortcode( 'pgndiagram', array( __CLASS__, 'callbackShortcodePGNDiagram' ) );
+		add_shortcode( $fen_shortcode, array( __CLASS__, 'callback_shortcode_fen' ) );
+		add_shortcode( $pgn_shortcode, array( __CLASS__, 'callback_shortcode_pgn' ) );
+		add_shortcode( 'pgndiagram', array( __CLASS__, 'callback_shortcode_pgn_diagram' ) );
 
 		// Register the no-texturize shortcodes
-		add_filter( 'no_texturize_shortcodes', array( __CLASS__, 'registerNoTexturizeShortcodes' ) );
+		add_filter( 'no_texturize_shortcodes', array( __CLASS__, 'register_no_texturize_shortcodes' ) );
 
 		// A high-priority filter is required to prevent the WP engine to perform some nasty operations
 		// (e.g. wptexturize, wpautop, etc...) on the text enclosed by the shortcodes.
@@ -52,37 +52,37 @@ abstract class RPBChessboardShortcodes {
 		// As the same type of low-level operation is performed here, using this priority level seems to be a good choice.
 		// However, having "official" guidelines or core methods to achieve this would be desirable.
 		//
-		add_filter( 'the_content', array( __CLASS__, 'preprocessLowLevelShortcodes' ), 8 );
-		add_filter( 'comment_text', array( __CLASS__, 'preprocessLowLevelShortcodes' ), 8 );
+		add_filter( 'the_content', array( __CLASS__, 'preprocess_low_level_shortcodes' ), 8 );
+		add_filter( 'comment_text', array( __CLASS__, 'preprocess_low_level_shortcodes' ), 8 );
 	}
 
 
-	public static function callbackShortcodeFEN( $atts, $content ) {
-		return self::runShortcode( 'FEN', false, $atts, $content ); }
-	public static function callbackShortcodePGN( $atts, $content ) {
-		return self::runShortcode( 'PGN', true, $atts, $content ); }
-	public static function callbackShortcodePGNDiagram( $atts, $content ) {
-		return self::runShortcode( 'PGNDiagram', false, $atts, $content ); }
+	public static function callback_shortcode_fen( $atts, $content ) {
+		return self::run_shortcode( 'FEN', false, $atts, $content ); }
+	public static function callback_shortcode_pgn( $atts, $content ) {
+		return self::run_shortcode( 'PGN', true, $atts, $content ); }
+	public static function callback_shortcode_pgn_diagram( $atts, $content ) {
+		return self::run_shortcode( 'PGNDiagram', false, $atts, $content ); }
 
 
 	/**
 	 * Process a shortcode.
 	 *
-	 * @param string $shortcodeName
-	 * @param boolean $lowLevel
+	 * @param string $shortcode_name
+	 * @param boolean $low_level
 	 * @param array $atts
 	 * @param string $content
 	 * @return string
 	 */
-	private static function runShortcode( $shortcodeName, $lowLevel, $atts, $content ) {
-		// The content of low-level shortcodes is supposed to have been saved in `self::$lowLevelShortcodeContent`.
-		if ( $lowLevel && isset( $content ) && isset( self::$lowLevelShortcodeContent[ $content ] ) ) {
-			$content = self::$lowLevelShortcodeContent[ $content ];
+	private static function run_shortcode( $shortcode_name, $low_level, $atts, $content ) {
+		// The content of low-level shortcodes is supposed to have been saved in `self::$low_level_shortcode_content`.
+		if ( $low_level && isset( $content ) && isset( self::$low_level_shortcode_content[ $content ] ) ) {
+			$content = self::$low_level_shortcode_content[ $content ];
 		}
 
 		// Print the shortcode.
-		$model = RPBChessboardHelperLoader::loadModel( 'Shortcode/' . $shortcodeName, $atts, $content );
-		return RPBChessboardHelperLoader::printTemplateOffScreen( 'Shortcode/' . $shortcodeName, $model );
+		$model = RPBChessboardHelperLoader::load_model( 'Shortcode/' . $shortcode_name, $atts, $content );
+		return RPBChessboardHelperLoader::print_template_off_screen( 'Shortcode/' . $shortcode_name, $model );
 	}
 
 
@@ -92,22 +92,22 @@ abstract class RPBChessboardShortcodes {
 	 * @param array $shortcodes Global list of no-texturize shortcodes.
 	 * @return array
 	 */
-	public static function registerNoTexturizeShortcodes( $shortcodes ) {
-		return array_merge( $shortcodes, self::$noTexturizeShortcodes );
+	public static function register_no_texturize_shortcodes( $shortcodes ) {
+		return array_merge( $shortcodes, self::$no_texturize_shortcodes );
 	}
 
 
 	/**
 	 * Replace the content of the low-level shortcodes with their respective MD5 digest,
-	 * saving the original content in the associative array `self::$lowLevelShortcodeContent`.
+	 * saving the original content in the associative array `self::$low_level_shortcode_content`.
 	 *
 	 * @param string $text
 	 * @return $text
 	 */
-	public static function preprocessLowLevelShortcodes( $text ) {
-		$tagMask = implode( '|', self::$lowLevelShortcodes );
-		$pattern = '/\\[(\\[?)(' . $tagMask . ')\\b([^\\]]*)\\](.*?)\\[\\/\\2\\](\\]?)/s';
-		return preg_replace_callback( $pattern, array( __CLASS__, 'preprocessLowLevelShortcode' ), $text );
+	public static function preprocess_low_level_shortcodes( $text ) {
+		$tag_mask = implode( '|', self::$low_level_shortcodes );
+		$pattern = '/\\[(\\[?)(' . $tag_mask . ')\\b([^\\]]*)\\](.*?)\\[\\/\\2\\](\\]?)/s';
+		return preg_replace_callback( $pattern, array( __CLASS__, 'preprocess_low_level_shortcode' ), $text );
 	}
 
 
@@ -117,7 +117,7 @@ abstract class RPBChessboardShortcodes {
 	 * @param array $m Regular expression match array.
 	 * @return string
 	 */
-	private static function preprocessLowLevelShortcode( $m ) {
+	private static function preprocess_low_level_shortcode( $m ) {
 		// Allow the [[foo]...[/foo]] syntax for escaping a tag.
 		if ( $m[1] === '[' && $m[5] === ']' ) {
 			return $m[0];
@@ -125,7 +125,7 @@ abstract class RPBChessboardShortcodes {
 
 		// General case: save the shortcode content, and replace it with its MD5 digest.
 		$digest                                    = md5( $m[4] );
-		self::$lowLevelShortcodeContent[ $digest ] = $m[4];
+		self::$low_level_shortcode_content[ $digest ] = $m[4];
 		return '[' . $m[2] . $m[3] . ']' . $digest . '[/' . $m[2] . ']';
 	}
 
@@ -134,17 +134,17 @@ abstract class RPBChessboardShortcodes {
 	 * Shortcodes for which the "texturize" filter performed by the WP engine on post content
 	 * must be disabled.
 	 */
-	private static $noTexturizeShortcodes;
+	private static $no_texturize_shortcodes;
 
 
 	/**
 	 * Shortcodes that need their content to be processed in a low-level manner.
 	 */
-	private static $lowLevelShortcodes;
+	private static $low_level_shortcodes;
 
 
 	/**
 	 * Saved content of the low-level shortcodes, indexed with their respective MD5 digest.
 	 */
-	private static $lowLevelShortcodeContent = array();
+	private static $low_level_shortcode_content = array();
 }

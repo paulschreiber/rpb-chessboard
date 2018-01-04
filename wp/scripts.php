@@ -29,11 +29,11 @@
 abstract class RPBChessboardScripts {
 
 	public static function register() {
-		$ext = self::getJSFileExtension();
+		$ext = self::get_js_file_extension();
 
 		// Moment.js (http://momentjs.com/)
 		wp_register_script( 'rpbchessboard-momentjs', RPBCHESSBOARD_URL . 'third-party-libs/moment-js/moment' . $ext, false, '2.13.0' );
-		$momentjs = self::localizeJavaScriptLib( 'rpbchessboard-momentjs', 'third-party-libs/moment-js/locales/%1$s.js', '2.13.0' );
+		$momentjs = self::localize_javascript_lib( 'rpbchessboard-momentjs', 'third-party-libs/moment-js/locales/%1$s.js', '2.13.0' );
 
 		// RPBChess
 		wp_register_script( 'rpbchessboard-core', RPBCHESSBOARD_URL . 'js/rpbchess-core' . $ext, false, RPBCHESSBOARD_VERSION );
@@ -93,36 +93,36 @@ abstract class RPBChessboardScripts {
 		}
 
 		// Inlined scripts
-		add_action( is_admin() ? 'admin_print_footer_scripts' : 'wp_print_footer_scripts', array( __CLASS__, 'callbackInlinedScripts' ) );
+		add_action( is_admin() ? 'admin_print_footer_scripts' : 'wp_print_footer_scripts', array( __CLASS__, 'callback_inlined_scripts' ) );
 
 		// TinyMCE editor
-		add_filter( 'mce_external_plugins', array( __CLASS__, 'callbackRegisterTinyMCEPlugin' ) );
-		add_filter( 'mce_buttons', array( __CLASS__, 'callbackRegisterTinyMCEButtons' ) );
+		add_filter( 'mce_external_plugins', array( __CLASS__, 'callback_register_tinymce_plugin' ) );
+		add_filter( 'mce_buttons', array( __CLASS__, 'callback_register_tinymce_buttons' ) );
 
 		// QuickTags editor
-		add_action( 'admin_print_footer_scripts', array( __CLASS__, 'callbackRegisterQuickTagsButtons' ) );
+		add_action( 'admin_print_footer_scripts', array( __CLASS__, 'callback_register_quick_tags_buttons' ) );
 	}
 
 
-	public static function callbackInlinedScripts() {
-		$model = RPBChessboardHelperLoader::loadModel( 'Common/Compatibility' );
-		RPBChessboardHelperLoader::printTemplate( 'Localization', $model );
+	public static function callback_inlined_scripts() {
+		$model = RPBChessboardHelperLoader::load_model( 'Common/Compatibility' );
+		RPBChessboardHelperLoader::print_template( 'Localization', $model );
 	}
 
 
-	public static function callbackRegisterTinyMCEPlugin( $plugins ) {
-		$plugins['RPBChessboard'] = RPBCHESSBOARD_URL . 'js/tinymce' . self::getJSFileExtension();
+	public static function callback_register_tinymce_plugin( $plugins ) {
+		$plugins['RPBChessboard'] = RPBCHESSBOARD_URL . 'js/tinymce' . self::get_js_file_extension();
 		return $plugins;
 	}
 
-	public static function callbackRegisterTinyMCEButtons( $buttons ) {
+	public static function callback_register_tinymce_buttons( $buttons ) {
 		array_push( $buttons, 'rpb-chessboard' );
 		return $buttons;
 	}
 
 
-	public static function callbackRegisterQuickTagsButtons() {
-		$url = RPBCHESSBOARD_URL . 'js/quicktags' . self::getJSFileExtension();
+	public static function callback_register_quick_tags_buttons() {
+		$url = RPBCHESSBOARD_URL . 'js/quicktags' . self::get_js_file_extension();
 		echo '<script type="text/javascript" src="' . $url . '"></script>';
 	}
 
@@ -132,7 +132,7 @@ abstract class RPBChessboardScripts {
 	 *
 	 * @return string
 	 */
-	private static function getJSFileExtension() {
+	private static function get_js_file_extension() {
 		return WP_DEBUG ? '.js' : '.min.js';
 	}
 
@@ -141,22 +141,22 @@ abstract class RPBChessboardScripts {
 	 * Determine the language code to use to configure a given JavaScript library, and enqueue the required file.
 	 *
 	 * @param string $handle Handle of the file to localize.
-	 * @param string $relativeFilePathTemplate Where the localized files should be searched.
+	 * @param string $relative_file_path_template Where the localized files should be searched.
 	 * @param string $version Version the library.
 	 * @return string Handle of the localized file a suitable translation has been found, original handle otherwise.
 	 */
-	private static function localizeJavaScriptLib( $handle, $relativeFilePathTemplate, $version ) {
-		foreach ( self::getBlogLangCodes() as $langCode ) {
+	private static function localize_javascript_lib( $handle, $relative_file_path_template, $version ) {
+		foreach ( self::get_blog_lang_codes() as $lang_code ) {
 			// Does the translation script file exist for the current language code?
-			$relativeFilePath = sprintf( $relativeFilePathTemplate, $langCode );
-			if ( ! file_exists( RPBCHESSBOARD_ABSPATH . $relativeFilePath ) ) {
+			$relative_file_path = sprintf( $relative_file_path_template, $lang_code );
+			if ( ! file_exists( RPBCHESSBOARD_ABSPATH . $relative_file_path ) ) {
 				continue;
 			}
 
 			// If it exists, register it, and return a handle pointing to the localization file.
-			$localizedHandle = $handle . '-localized';
-			wp_register_script( $localizedHandle, RPBCHESSBOARD_URL . $relativeFilePath, array( $handle ), $version );
-			return $localizedHandle;
+			$localized_handle = $handle . '-localized';
+			wp_register_script( $localized_handle, RPBCHESSBOARD_URL . $relative_file_path, array( $handle ), $version );
+			return $localized_handle;
 		}
 
 		// Otherwise, if no translation file exists, return the handle of the original library.
@@ -169,21 +169,21 @@ abstract class RPBChessboardScripts {
 	 *
 	 * @return array
 	 */
-	private static function getBlogLangCodes() {
-		if ( ! isset( self::$blogLangCodes ) ) {
-			$mainLanguage        = str_replace( '_', '-', strtolower( get_locale() ) );
-			self::$blogLangCodes = array( $mainLanguage );
+	private static function get_blog_lang_codes() {
+		if ( ! isset( self::$blog_lang_codes ) ) {
+			$main_language        = str_replace( '_', '-', strtolower( get_locale() ) );
+			self::$blog_lang_codes = array( $main_language );
 
-			if ( preg_match( '/([a-z]+)\\-([a-z]+)/', $mainLanguage, $m ) ) {
-				self::$blogLangCodes[] = $m[1];
+			if ( preg_match( '/([a-z]+)\\-([a-z]+)/', $main_language, $m ) ) {
+				self::$blog_lang_codes[] = $m[1];
 			}
 		}
-		return self::$blogLangCodes;
+		return self::$blog_lang_codes;
 	}
 
 
 	/**
 	 * Blog language codes.
 	 */
-	private static $blogLangCodes;
+	private static $blog_lang_codes;
 }

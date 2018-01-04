@@ -41,12 +41,12 @@ abstract class RPBChessboardStyleSheets {
 		wp_enqueue_style( 'rpbchessboard-chessgame', RPBCHESSBOARD_URL . 'css/rpbchess-ui-chessgame.css', false, RPBCHESSBOARD_VERSION );
 
 		// Small-screens
-		RPBChessboardHelperCache::ensureExists( 'small-screens.css', 'Misc/SmallScreens', 'Common/SmallScreens' );
-		self::enqueueCachedStyle( 'rpbchessboard-smallscreens', 'small-screens.css' );
+		RPBChessboardHelperCache::ensure_exists( 'small-screens.css', 'Misc/SmallScreens', 'Common/SmallScreens' );
+		self::enqueue_cached_style( 'rpbchessboard-smallscreens', 'small-screens.css' );
 
 		// Theming
-		RPBChessboardHelperCache::ensureExists( 'theming.css', 'Misc/Theming', 'Misc/Theming' );
-		self::enqueueCachedStyle( 'rpbchessboard-theming', 'theming.css' );
+		RPBChessboardHelperCache::ensure_exists( 'theming.css', 'Misc/Theming', 'Misc/Theming' );
+		self::enqueue_cached_style( 'rpbchessboard-theming', 'theming.css' );
 
 		// Additional CSS for the frontend/backend.
 		if ( is_admin() ) {
@@ -57,7 +57,7 @@ abstract class RPBChessboardStyleSheets {
 	}
 
 
-	private static function enqueueCachedStyle( $handle, $fileName ) {
-		wp_enqueue_style( $handle, RPBChessboardHelperCache::getURL( $fileName ), false, RPBChessboardHelperCache::getVersion( $fileName ) );
+	private static function enqueue_cached_style( $handle, $file_name ) {
+		wp_enqueue_style( $handle, RPBChessboardHelperCache::get_url( $file_name ), false, RPBChessboardHelperCache::get_version( $file_name ) );
 	}
 }

@@ -32,42 +32,42 @@ abstract class RPBChessboardPostActions {
 	 * Look at the POST variable `$_POST['rpbchessboard_action']` and execute the corresponding action, if any.
 	 */
 	public static function run() {
-		switch ( self::getPostAction() ) {
+		switch ( self::get_post_action() ) {
 			case 'update-options':
-				self::executeAction( 'SaveOptions', 'updateOptions' );
+				self::execute_action( 'SaveOptions', 'updateOptions' );
 				break;
 			case 'set-default-colorset':
-				self::executeAction( 'SaveOptions', 'updateDefaultColorset' );
+				self::execute_action( 'SaveOptions', 'updateDefaultColorset' );
 				break;
 			case 'set-default-pieceset':
-				self::executeAction( 'SaveOptions', 'updateDefaultPieceset' );
+				self::execute_action( 'SaveOptions', 'updateDefaultPieceset' );
 				break;
 			case 'reset-general':
-				self::executeAction( 'ResetOptions', 'resetGeneral' );
+				self::execute_action( 'ResetOptions', 'resetGeneral' );
 				break;
 			case 'reset-compatibility':
-				self::executeAction( 'ResetOptions', 'resetCompatibility' );
+				self::execute_action( 'ResetOptions', 'resetCompatibility' );
 				break;
 			case 'reset-smallscreens':
-				self::executeAction( 'ResetOptions', 'resetSmallScreens' );
+				self::execute_action( 'ResetOptions', 'resetSmallScreens' );
 				break;
 			case 'add-colorset':
-				self::executeAction( 'ThemingColorset', 'add' );
+				self::execute_action( 'ThemingColorset', 'add' );
 				break;
 			case 'edit-colorset':
-				self::executeAction( 'ThemingColorset', 'edit' );
+				self::execute_action( 'ThemingColorset', 'edit' );
 				break;
 			case 'delete-colorset':
-				self::executeAction( 'ThemingColorset', 'delete' );
+				self::execute_action( 'ThemingColorset', 'delete' );
 				break;
 			case 'add-pieceset':
-				self::executeAction( 'ThemingPieceset', 'add' );
+				self::execute_action( 'ThemingPieceset', 'add' );
 				break;
 			case 'edit-pieceset':
-				self::executeAction( 'ThemingPieceset', 'edit' );
+				self::execute_action( 'ThemingPieceset', 'edit' );
 				break;
 			case 'delete-pieceset':
-				self::executeAction( 'ThemingPieceset', 'delete' );
+				self::execute_action( 'ThemingPieceset', 'delete' );
 				break;
 			default:
 				break;
@@ -76,19 +76,19 @@ abstract class RPBChessboardPostActions {
 
 
 	/**
-	 * Load the model `$postModelName`, and execute the method `$methodName` supposedly defined by this model.
+	 * Load the model `$post_model_name`, and execute the method `$method_name` supposedly defined by this model.
 	 *
-	 * @param string $postModelName
-	 * @param string $methodName
+	 * @param string $post_model_name
+	 * @param string $method_name
 	 * @param string $capability Required capability to execute the action. Default is `'manage_options'`.
 	 */
-	private static function executeAction( $postModelName, $methodName, $capability = 'manage_options' ) {
+	private static function execute_action( $post_model_name, $method_name, $capability = 'manage_options' ) {
 		if ( ! current_user_can( $capability ) ) {
 			return;
 		}
 
-		$postModel = RPBChessboardHelperLoader::loadModel( 'Post/' . $postModelName );
-		$message   = $postModel->$methodName();
+		$post_model = RPBChessboardHelperLoader::load_model( 'Post/' . $post_model_name );
+		$message   = $post_model->$method_name();
 
 		require_once RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php';
 		RPBChessboardAbstractModelAdminPage::initializePostMessage( $message );
@@ -104,7 +104,7 @@ abstract class RPBChessboardPostActions {
 	 *
 	 * @return string
 	 */
-	private static function getPostAction() {
+	private static function get_post_action() {
 		return isset( $_POST['rpbchessboard_action'] ) ? $_POST['rpbchessboard_action'] : '';
 	}
 }
