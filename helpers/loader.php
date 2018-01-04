@@ -28,19 +28,19 @@ abstract class RPBChessboardHelperLoader {
 	/**
 	 * Load the model corresponding to the given model name.
 	 *
-	 * @param string $modelName Name of the model.
+	 * @param string $model_name Name of the model.
 	 * @param mixed ... Arguments to pass to the model (optional).
 	 * @return object New instance of the model.
 	 */
-	public static function loadModel( $modelName ) {
-		$fileName  = strtolower( $modelName );
-		$className = 'RPBChessboardModel' . str_replace( '/', '', $modelName );
-		require_once RPBCHESSBOARD_ABSPATH . 'models/' . $fileName . '.php';
+	public static function load_model( $model_name ) {
+		$file_name  = strtolower( $model_name );
+		$class_name = 'RPBChessboardModel' . str_replace( '/', '', $model_name );
+		require_once RPBCHESSBOARD_ABSPATH . 'models/' . $file_name . '.php';
 		if ( func_num_args() === 1 ) {
-			return new $className();
+			return new $class_name();
 		} else {
 			$args  = func_get_args();
-			$clazz = new ReflectionClass( $className );
+			$clazz = new ReflectionClass( $class_name );
 			return $clazz->newInstanceArgs( array_slice( $args, 1 ) );
 		}
 	}
@@ -49,37 +49,37 @@ abstract class RPBChessboardHelperLoader {
 	/**
 	 * Print the given template to the current output.
 	 *
-	 * @param string $templateName
+	 * @param string $template_name
 	 * @param object $model
 	 * @param array $args
 	 */
-	public static function printTemplate( $templateName, $model, $args = null ) {
+	public static function print_template( $template_name, $model, $args = null ) {
 
 		if ( isset( $args ) ) {
 			foreach ( $args as $key => $value ) {
-				if ( $key === 'model' || $key === 'templateName' || $key === 'fileName' ) {
+				if ( $key === 'model' || $key === 'template_name' || $key === 'file_name' ) {
 					continue;
 				}
 				$$key = $value;
 			}
 		}
 
-		$fileName = RPBCHESSBOARD_ABSPATH . 'templates/' . strtolower( $templateName );
-		include $fileName . ( is_dir( $fileName ) ? '/main.php' : '.php' );
+		$file_name = RPBCHESSBOARD_ABSPATH . 'templates/' . strtolower( $template_name );
+		include $file_name . ( is_dir( $file_name ) ? '/main.php' : '.php' );
 	}
 
 
 	/**
 	 * Print the given template to a string.
 	 *
-	 * @param string $templateName
+	 * @param string $template_name
 	 * @param object $model
 	 * @param array $args
 	 * @return string
 	 */
-	public static function printTemplateOffScreen( $templateName, $model, $args = null ) {
+	public static function print_template_off_screen( $template_name, $model, $args = null ) {
 		ob_start();
-		self::printTemplate( $templateName, $model, $args );
+		self::print_template( $template_name, $model, $args );
 		return ob_get_clean();
 	}
 }

@@ -55,8 +55,8 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return int May be null is the value is not valid.
 	 */
-	public static function validateSquareSize( $value ) {
-		return self::validateInteger( $value, self::MINIMUM_SQUARE_SIZE, self::MAXIMUM_SQUARE_SIZE );
+	public static function validate_square_size( $value ) {
+		return self::validate_integer( $value, self::MINIMUM_SQUARE_SIZE, self::MAXIMUM_SQUARE_SIZE );
 	}
 
 
@@ -66,7 +66,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validateColor( $value ) {
+	public static function validate_color( $value ) {
 		if ( is_string( $value ) ) {
 			$value = strtolower( $value );
 			if ( preg_match( '/^#[0-9a-f]{6}$/', $value ) ) {
@@ -83,7 +83,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validateSetCode( $value ) {
+	public static function validate_set_code( $value ) {
 		if ( is_string( $value ) ) {
 			$value = strtolower( $value );
 			if ( preg_match( '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $value ) ) {
@@ -100,7 +100,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validateSetCodeList( $value ) {
+	public static function validate_set_code_list( $value ) {
 		if ( is_string( $value ) ) {
 			$value = strtolower( $value );
 			if ( $value === '' ) {
@@ -119,7 +119,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validateDiagramAlignment( $value ) {
+	public static function validate_diagram_alignment( $value ) {
 		return ( $value === 'center' || $value === 'floatLeft' || $value === 'floatRight' ) ? $value : null;
 	}
 
@@ -130,7 +130,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validatePieceSymbols( $value ) {
+	public static function validate_piece_symbols( $value ) {
 		if ( $value === 'native' || $value === 'localized' || $value === 'figurines' ) {
 			return $value;
 		} elseif ( is_string( $value ) && preg_match( '/^\([a-zA-Z]{6}\)$/', $value ) ) {
@@ -147,7 +147,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validatePieceSymbol( $value ) {
+	public static function validate_piece_symbol( $value ) {
 		return is_string( $value ) && preg_match( '/^[a-zA-Z]$/', $value ) ? strtoupper( $value ) : null;
 	}
 
@@ -158,7 +158,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return string May be null is the value is not valid.
 	 */
-	public static function validateNavigationBoard( $value ) {
+	public static function validate_navigation_board( $value ) {
 		return ( $value === 'none' || $value === 'frame' || $value === 'above' || $value === 'below'
 			|| $value === 'floatLeft' || $value === 'floatRight' || $value === 'scrollLeft' || $value === 'scrollRight' ) ? $value : null;
 	}
@@ -167,7 +167,7 @@ abstract class RPBChessboardHelperValidation {
 	/**
 	 * Validate a set of small-screen mode specifications.
 	 */
-	public static function validateSmallScreenModes( $value ) {
+	public static function validate_small_screen_modes( $value ) {
 		if ( ! is_string( $value ) ) {
 			return null;
 		}
@@ -184,13 +184,13 @@ abstract class RPBChessboardHelperValidation {
 			}
 
 			// Validate each sub-token
-			$screenWidth     = self::validateInteger( $tokens[0], 1 );
-			$squareSize      = self::validateSquareSize( $tokens[1] );
-			$hideCoordinates = self::validateBoolean( $tokens[2] );
-			if ( isset( $screenWidth ) && isset( $squareSize ) && isset( $hideCoordinates ) ) {
-				$res[ $screenWidth ] = (object) array(
-					'squareSize'      => $squareSize,
-					'hideCoordinates' => $hideCoordinates,
+			$screen_width     = self::validate_integer( $tokens[0], 1 );
+			$square_size      = self::validate_square_size( $tokens[1] );
+			$hide_coordinates = self::validate_boolean( $tokens[2] );
+			if ( isset( $screen_width ) && isset( $square_size ) && isset( $hide_coordinates ) ) {
+				$res[ $screen_width ] = (object) array(
+					'squareSize'      => $square_size,
+					'hideCoordinates' => $hide_coordinates,
 				);
 			}
 		}
@@ -207,8 +207,8 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return int May be null is the value is not valid.
 	 */
-	public static function validateAnimationSpeed( $value ) {
-		$value = self::validateInteger( $value, 0, self::MAXIMUM_ANIMATION_SPEED );
+	public static function validate_animation_speed( $value ) {
+		$value = self::validate_integer( $value, 0, self::MAXIMUM_ANIMATION_SPEED );
 		if ( isset( $value ) ) {
 			$value = round( $value / self::STEP_ANIMATION_SPEED ) * self::STEP_ANIMATION_SPEED;
 		}
@@ -224,7 +224,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param int $max Maximum value (optional).
 	 * @return int May be null is the value is not valid.
 	 */
-	public static function validateInteger( $value, $min = null, $max = null ) {
+	public static function validate_integer( $value, $min = null, $max = null ) {
 		$value = filter_var( $value, FILTER_VALIDATE_INT );
 		return $value === false ? null : max( $max === null ? $value : min( $value, $max ), $min );
 	}
@@ -236,7 +236,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return boolean May be null is the value is not valid.
 	 */
-	public static function validateBoolean( $value ) {
+	public static function validate_boolean( $value ) {
 		return ( $value === null || $value === '' ) ? null : filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
 	}
 
@@ -247,7 +247,7 @@ abstract class RPBChessboardHelperValidation {
 	 * @param mixed $value
 	 * @return boolean May be null is the value is not valid.
 	 */
-	public static function validateBooleanFromInt( $value ) {
+	public static function validate_boolean_from_int( $value ) {
 		$value = filter_var( $value, FILTER_VALIDATE_INT );
 		if ( $value === 0 ) {
 			return false;

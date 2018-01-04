@@ -28,69 +28,69 @@ abstract class RPBChessboardHelperCache {
 	/**
 	 * Return the URL of the given cached file.
 	 *
-	 * @param string $fileName File name, relative to the cache root.
+	 * @param string $file_name File name, relative to the cache root.
 	 * @return string
 	 */
-	public static function getURL( $fileName ) {
-		return RPBCHESSBOARD_URL . 'cache/' . $fileName;
+	public static function get_url( $file_name ) {
+		return RPBCHESSBOARD_URL . 'cache/' . $file_name;
 	}
 
 
 	/**
 	 * Return the version of the given cached file.
 	 *
-	 * @param string $fileName File name, relative to the cache root.
+	 * @param string $file_name File name, relative to the cache root.
 	 * @return string
 	 */
-	public static function getVersion( $fileName ) {
-		return get_option( 'rpbchessboard_cache_' . $fileName, '0' );
+	public static function get_version( $file_name ) {
+		return get_option( 'rpbchessboard_cache_' . $file_name, '0' );
 	}
 
 
 	/**
 	 * Check whether the given file exists in the cache or not.
 	 *
-	 * @param string $fileName File name, relative to the cache root.
+	 * @param string $file_name File name, relative to the cache root.
 	 * @return boolean
 	 */
-	public static function exists( $fileName ) {
-		return file_exists( self::getFullFileName( $fileName ) );
+	public static function exists( $file_name ) {
+		return file_exists( self::get_full_file_name( $file_name ) );
 	}
 
 
 	/**
 	 * Write a file into the cache. Nothing happens if the file already exists.
 	 *
-	 * @param string $fileName File name, relative to the cache root.
-	 * @param string $templateName Template to use to generate the file, if necessary.
-	 * @param string $modelName Model to use to generate the file, if necessary.
+	 * @param string $file_name File name, relative to the cache root.
+	 * @param string $template_name Template to use to generate the file, if necessary.
+	 * @param string $model_name Model to use to generate the file, if necessary.
 	 */
-	public static function ensureExists( $fileName, $templateName, $modelName ) {
-		$fullFileName = self::getFullFileName( $fileName );
-		if ( file_exists( $fullFileName ) ) {
+	public static function ensure_exists( $file_name, $template_name, $model_name ) {
+		$full_file_name = self::get_full_file_name( $file_name );
+		if ( file_exists( $full_file_name ) ) {
 			return; }
 
-		$model = RPBChessboardHelperLoader::loadModel( $modelName );
-		$text  = RPBChessboardHelperLoader::printTemplateOffScreen( $templateName, $model );
+		$model = RPBChessboardHelperLoader::load_model( $model_name );
+		$text  = RPBChessboardHelperLoader::print_template_off_screen( $template_name, $model );
 
-		$dirName = dirname( $fullFileName );
-		if ( ! file_exists( $dirName ) ) {
-			mkdir( $dirName, 0777, true );
+		$dir_name = dirname( $full_file_name );
+		if ( ! file_exists( $dir_name ) ) {
+			mkdir( $dir_name, 0777, true );
 		}
-		file_put_contents( $fullFileName, $text );
-		update_option( 'rpbchessboard_cache_' . $fileName, uniqid() );
+		file_put_contents( $full_file_name, $text );
+		update_option( 'rpbchessboard_cache_' . $file_name, uniqid() );
 	}
 
 
 	/**
 	 * Remove the given file from the cache.
 	 *
-	 * @param string $fileName File name, relative to the cache root.
+	 * @param string $file_name File name, relative to the cache root.
 	 */
-	public static function remove( $fileName ) {
-		$fullFileName = self::getFullFileName( $fileName );
-		if ( file_exists( $fullFileName ) ) {
-			unlink( $fullFileName );
+	public static function remove( $file_name ) {
+		$full_file_name = self::get_full_file_name( $file_name );
+		if ( file_exists( $full_file_name ) ) {
+			unlink( $full_file_name );
 		}
 	}
 
@@ -98,9 +98,9 @@ abstract class RPBChessboardHelperCache {
 	/**
 	 * Return the full-path to a file in the cache directory.
 	 *
-	 * @param string $fileName File name, relative to the cache root.
+	 * @param string $file_name File name, relative to the cache root.
 	 */
-	private static function getFullFileName( $fileName ) {
-		return RPBCHESSBOARD_ABSPATH . 'cache/' . $fileName;
+	private static function get_full_file_name( $file_name ) {
+		return RPBCHESSBOARD_ABSPATH . 'cache/' . $file_name;
 	}
 }
