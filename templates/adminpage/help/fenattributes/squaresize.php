@@ -41,15 +41,15 @@
 					<th><?php _e( 'Default', 'rpb-chessboard' ); ?></th>
 					<th><?php _e( 'Description', 'rpb-chessboard' ); ?></th>
 				</tr>
-				<?php foreach ( $model->getSquareSizeList() as $squareSize ) : ?>
+				<?php foreach ( $model->get_square_size_list() as $square_size ) : ?>
 					<tr>
-						<td><a href="#" class="rpbchessboard-sourceCode rpbchessboard-fenAttributeSquareSize-value"><?php echo htmlspecialchars( $squareSize ); ?></a></td>
+						<td><a href="#" class="rpbchessboard-sourceCode rpbchessboard-fenAttributeSquareSize-value"><?php echo htmlspecialchars( $square_size ); ?></a></td>
 						<td>
 						<?php
-						if ( $model->getDefaultSquareSize() === $squareSize ) :
+						if ( $model->getDefaultSquareSize() === $square_size ) :
 ?>
 <div class="rpbchessboard-tickIcon"></div><?php endif; ?></td>
-						<td><?php echo sprintf( __( 'The square width is %1$s pixels.', 'rpb-chessboard' ), htmlspecialchars( $squareSize ) ); ?></td>
+						<td><?php echo sprintf( __( 'The square width is %1$s pixels.', 'rpb-chessboard' ), htmlspecialchars( $square_size ) ); ?></td>
 					</tr>
 				<?php endforeach; ?>
 				<tr>

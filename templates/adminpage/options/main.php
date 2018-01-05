@@ -26,7 +26,7 @@
 		<input type="hidden" name="rpbchessboard_action" value="<?php echo htmlspecialchars( $model->getFormAction() ); ?>" />
 
 		<div>
-			<?php RPBChessboardHelperLoader::printTemplate( $model->getSubPageTemplateName(), $model ); ?>
+			<?php RPBChessboardHelperLoader::print_template( $model->getSubPageTemplateName(), $model ); ?>
 			<p class="submit">
 				<input type="submit" class="button-primary" value="<?php _e( 'Save changes', 'rpb-chessboard' ); ?>" />
 				<a class="button" href="<?php echo htmlspecialchars( $model->getFormActionURL() ); ?>"><?php _e( 'Cancel', 'rpb-chessboard' ); ?></a>

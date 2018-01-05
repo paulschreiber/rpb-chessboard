@@ -42,10 +42,10 @@
 </p>
 
 <?php
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/General/BoardAspect', $model );
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/General/DiagramAlignment', $model );
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/General/PieceSymbols', $model );
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/General/NavigationBoard', $model );
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/General/NavigationButtons', $model );
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/General/MoveAnimation', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/General/BoardAspect', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/General/DiagramAlignment', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/General/PieceSymbols', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/General/NavigationBoard', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/General/NavigationButtons', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/General/MoveAnimation', $model );
 ?>

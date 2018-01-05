@@ -49,11 +49,11 @@
 	</ol>
 
 	<?php
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNAttributes/PieceSymbols', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNAttributes/NavigationBoard', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNAttributes/NavigationButtons', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNAttributes/MoveAnimation', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNAttributes/BoardAspect', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNAttributes/PieceSymbols', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNAttributes/NavigationBoard', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNAttributes/NavigationButtons', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNAttributes/MoveAnimation', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNAttributes/BoardAspect', $model );
 	?>
 
 </div>

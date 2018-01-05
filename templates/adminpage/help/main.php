@@ -20,7 +20,7 @@
  ******************************************************************************/
 ?>
 
-<?php RPBChessboardHelperLoader::printTemplate( $model->getSubPageTemplateName(), $model ); ?>
+<?php RPBChessboardHelperLoader::print_template( $model->getSubPageTemplateName(), $model ); ?>
 
 <script type="text/javascript">
 	jQuery(document).ready(function($) {

@@ -50,12 +50,12 @@
 	</ol>
 
 	<?php
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/FENAttributes/Flip', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/FENAttributes/SquareSize', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/FENAttributes/ShowCoordinates', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/FENAttributes/Markers', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/FENAttributes/ColorsetPieceset', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/FENAttributes/DiagramAlignment', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/FENAttributes/Flip', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/FENAttributes/SquareSize', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/FENAttributes/ShowCoordinates', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/FENAttributes/Markers', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/FENAttributes/ColorsetPieceset', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/FENAttributes/DiagramAlignment', $model );
 	?>
 
 </div>

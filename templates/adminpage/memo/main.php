@@ -40,8 +40,8 @@
 	</script>
 
 	<?php
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Memo/FEN', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Memo/PGN', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Memo/FEN', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Memo/PGN', $model );
 	?>
 
 </div>

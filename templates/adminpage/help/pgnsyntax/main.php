@@ -70,14 +70,14 @@
 	</ol>
 
 	<?php
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/Example', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/NAG', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/Comment', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/Variation', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/Diagram', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/Marker', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/CustomStartingPosition', $model );
-		RPBChessboardHelperLoader::printTemplate( 'AdminPage/Help/PGNSyntax/NullMove', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/Example', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/NAG', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/Comment', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/Variation', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/Diagram', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/Marker', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/CustomStartingPosition', $model );
+		RPBChessboardHelperLoader::print_template( 'AdminPage/Help/PGNSyntax/NullMove', $model );
 	?>
 
 </div>

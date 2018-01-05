@@ -21,6 +21,6 @@
 ?>
 
 <?php
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/Compatibility/ChessPlugins', $model );
-	RPBChessboardHelperLoader::printTemplate( 'AdminPage/Options/Compatibility/jQuery', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/Compatibility/ChessPlugins', $model );
+	RPBChessboardHelperLoader::print_template( 'AdminPage/Options/Compatibility/jQuery', $model );
 

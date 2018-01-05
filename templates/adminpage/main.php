@@ -66,6 +66,6 @@
 		</ul>
 	<?php endif; ?>
 
-	<?php RPBChessboardHelperLoader::printTemplate( $model->getPageTemplateName(), $model ); ?>
+	<?php RPBChessboardHelperLoader::print_template( $model->getPageTemplateName(), $model ); ?>
 
 </div>

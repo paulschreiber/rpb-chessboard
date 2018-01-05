@@ -107,7 +107,7 @@ checked="yes"<?php endif; ?>
 			<input type="checkbox" name="smallScreenMode<?php echo htmlspecialchars( $index ); ?>-hideCoordinates" class="rpbchessboard-hideCoordinatesField"
 				id="rpbchessboard-smallScreenMode<?php echo htmlspecialchars( $index ); ?>-hideCoordinatesField" value="1"
 				<?php
-				if ( $mode->hideCoordinates ) :
+				if ( $mode->hide_coordinates ) :
 ?>
 checked="yes"<?php endif; ?>
 			/>

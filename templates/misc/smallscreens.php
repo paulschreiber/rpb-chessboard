@@ -47,7 +47,7 @@ if ( ! $model->getSmallScreenCompatibility() ) {
 
 		<?php endif; ?>
 
-		<?php if ( $mode->hideCoordinates ) : ?>
+		<?php if ( $mode->hide_coordinates ) : ?>
 			.rpbui-chessboard-cell.rpbui-chessboard-rowCoordinate,
 			.rpbui-chessboard-row.rpbui-chessboard-columnCoordinateRow {
 				display: none;
