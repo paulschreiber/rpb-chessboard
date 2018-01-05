@@ -30,7 +30,7 @@ class RPBChessboardModelShortcodePGN extends RPBChessboardAbstractModelShortcode
 
 	private $loadedFromExternalPGNFile;
 	private $externalPGNFile;
-	private $widgetArgs;
+	private $widget_args;
 
 
 	public function __construct( $atts, $content ) {
@@ -85,74 +85,74 @@ class RPBChessboardModelShortcodePGN extends RPBChessboardAbstractModelShortcode
 	 * @return array
 	 */
 	public function getWidgetArgs() {
-		if ( ! isset( $this->widgetArgs ) ) {
+		if ( ! isset( $this->widget_args ) ) {
 
-			$this->widgetArgs = array();
+			$this->widget_args = array();
 
 			if ( $this->isLoadedFromExternalPGNFile() ) {
-				$this->widgetArgs['url'] = $this->getExternalPGNFile();
+				$this->widget_args['url'] = $this->getExternalPGNFile();
 			} else {
-				$this->widgetArgs['pgn'] = $this->getContent();
+				$this->widget_args['pgn'] = $this->getContent();
 			}
 
 			$atts              = $this->getAttributes();
 			$chessboardOptions = array();
 
 			// Game index
-			$value = isset( $atts['game'] ) ? RPBChessboardHelperValidation::validateInteger( $atts['game'], 0 ) : null;
+			$value = isset( $atts['game'] ) ? RPBChessboardHelperValidation::validate_integer( $atts['game'], 0 ) : null;
 			if ( isset( $value ) ) {
-				$this->widgetArgs['gameIndex'] = $value;
+				$this->widget_args['gameIndex'] = $value;
 			}
 
 			// Orientation
-			$value = isset( $atts['flip'] ) ? RPBChessboardHelperValidation::validateBoolean( $atts['flip'] ) : null;
+			$value = isset( $atts['flip'] ) ? RPBChessboardHelperValidation::validate_boolean( $atts['flip'] ) : null;
 			if ( isset( $value ) ) {
 				$chessboardOptions['flip'] = $value;
 			}
 
 			// Square size
-			$value                           = isset( $atts['square_size'] ) ? RPBChessboardHelperValidation::validateSquareSize( $atts['square_size'] ) : null;
+			$value                           = isset( $atts['square_size'] ) ? RPBChessboardHelperValidation::validate_square_size( $atts['square_size'] ) : null;
 			$chessboardOptions['squareSize'] = isset( $value ) ? $value : $this->getDefaultSquareSize();
 
 			// Show coordinates
-			$value                                = isset( $atts['show_coordinates'] ) ? RPBChessboardHelperValidation::validateBoolean( $atts['show_coordinates'] ) : null;
+			$value                                = isset( $atts['show_coordinates'] ) ? RPBChessboardHelperValidation::validate_boolean( $atts['show_coordinates'] ) : null;
 			$chessboardOptions['showCoordinates'] = isset( $value ) ? $value : $this->getDefaultShowCoordinates();
 
 			// Colorset
-			$value                         = isset( $atts['colorset'] ) ? RPBChessboardHelperValidation::validateSetCode( $atts['colorset'] ) : null;
+			$value                         = isset( $atts['colorset'] ) ? RPBChessboardHelperValidation::validate_set_code( $atts['colorset'] ) : null;
 			$chessboardOptions['colorset'] = isset( $value ) ? $value : $this->getDefaultColorset();
 
 			// Pieceset
-			$value                         = isset( $atts['pieceset'] ) ? RPBChessboardHelperValidation::validateSetCode( $atts['pieceset'] ) : null;
+			$value                         = isset( $atts['pieceset'] ) ? RPBChessboardHelperValidation::validate_set_code( $atts['pieceset'] ) : null;
 			$chessboardOptions['pieceset'] = isset( $value ) ? $value : $this->getDefaultPieceset();
 
 			// Animation speed
-			$value                               = isset( $atts['animation_speed'] ) ? RPBChessboardHelperValidation::validateAnimationSpeed( $atts['animation_speed'] ) : null;
+			$value                               = isset( $atts['animation_speed'] ) ? RPBChessboardHelperValidation::validate_animation_speed( $atts['animation_speed'] ) : null;
 			$chessboardOptions['animationSpeed'] = isset( $value ) ? $value : $this->getDefaultAnimationSpeed();
 
 			// Move arrow
-			$value                              = isset( $atts['show_move_arrow'] ) ? RPBChessboardHelperValidation::validateBoolean( $atts['show_move_arrow'] ) : null;
+			$value                              = isset( $atts['show_move_arrow'] ) ? RPBChessboardHelperValidation::validate_boolean( $atts['show_move_arrow'] ) : null;
 			$chessboardOptions['showMoveArrow'] = isset( $value ) ? $value : $this->getDefaultShowMoveArrow();
 
 			// Piece symbols
-			$value                            = isset( $atts['piece_symbols'] ) ? RPBChessboardHelperValidation::validatePieceSymbols( $atts['piece_symbols'] ) : null;
-			$this->widgetArgs['pieceSymbols'] = isset( $value ) ? $value : $this->getDefaultPieceSymbols();
+			$value                            = isset( $atts['piece_symbols'] ) ? RPBChessboardHelperValidation::validate_piece_symbols( $atts['piece_symbols'] ) : null;
+			$this->widget_args['pieceSymbols'] = isset( $value ) ? $value : $this->getDefaultPieceSymbols();
 
 			// Navigation board
-			$value                               = isset( $atts['navigation_board'] ) ? RPBChessboardHelperValidation::validateNavigationBoard( $atts['navigation_board'] ) : null;
-			$this->widgetArgs['navigationBoard'] = isset( $value ) ? $value : $this->getDefaultNavigationBoard();
+			$value                               = isset( $atts['navigation_board'] ) ? RPBChessboardHelperValidation::validate_navigation_board( $atts['navigation_board'] ) : null;
+			$this->widget_args['navigationBoard'] = isset( $value ) ? $value : $this->getDefaultNavigationBoard();
 
 			// Navigation toolbar
-			$value                                  = isset( $atts['show_flip_button'] ) ? RPBChessboardHelperValidation::validateBoolean( $atts['show_flip_button'] ) : null;
-			$this->widgetArgs['showFlipButton']     = isset( $value ) ? $value : $this->getDefaultShowFlipButton();
-			$value                                  = isset( $atts['show_download_button'] ) ? RPBChessboardHelperValidation::validateBoolean( $atts['show_download_button'] ) : null;
-			$this->widgetArgs['showDownloadButton'] = isset( $value ) ? $value : $this->getDefaultShowDownloadButton();
+			$value                                  = isset( $atts['show_flip_button'] ) ? RPBChessboardHelperValidation::validate_boolean( $atts['show_flip_button'] ) : null;
+			$this->widget_args['showFlipButton']     = isset( $value ) ? $value : $this->getDefaultShowFlipButton();
+			$value                                  = isset( $atts['show_download_button'] ) ? RPBChessboardHelperValidation::validate_boolean( $atts['show_download_button'] ) : null;
+			$this->widget_args['showDownloadButton'] = isset( $value ) ? $value : $this->getDefaultShowDownloadButton();
 
 			// Use the same aspect parameters for the navigation board and the text comment diagrams.
-			$this->widgetArgs['navigationBoardOptions'] = $chessboardOptions;
-			$this->widgetArgs['diagramOptions']         = $chessboardOptions;
+			$this->widget_args['navigationBoardOptions'] = $chessboardOptions;
+			$this->widget_args['diagramOptions']         = $chessboardOptions;
 		}
-		return $this->widgetArgs;
+		return $this->widget_args;
 	}
 
 

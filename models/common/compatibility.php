@@ -52,7 +52,7 @@ class RPBChessboardModelCommonCompatibility extends RPBChessboardAbstractModel {
 	 */
 	public function getFENCompatibilityMode() {
 		if ( ! isset( self::$fenCompatibilityMode ) ) {
-			$value                      = RPBChessboardHelperValidation::validateBooleanFromInt( get_option( 'rpbchessboard_fenCompatibilityMode' ) );
+			$value                      = RPBChessboardHelperValidation::validate_boolean_from_int( get_option( 'rpbchessboard_fenCompatibilityMode' ) );
 			self::$fenCompatibilityMode = isset( $value ) ? $value : false;
 		}
 		return self::$fenCompatibilityMode;
@@ -67,7 +67,7 @@ class RPBChessboardModelCommonCompatibility extends RPBChessboardAbstractModel {
 	 */
 	public function getPGNCompatibilityMode() {
 		if ( ! isset( self::$pgnCompatibilityMode ) ) {
-			$value                      = RPBChessboardHelperValidation::validateBooleanFromInt( get_option( 'rpbchessboard_pgnCompatibilityMode' ) );
+			$value                      = RPBChessboardHelperValidation::validate_boolean_from_int( get_option( 'rpbchessboard_pgnCompatibilityMode' ) );
 			self::$pgnCompatibilityMode = isset( $value ) ? $value : false;
 		}
 		return self::$pgnCompatibilityMode;
@@ -101,7 +101,7 @@ class RPBChessboardModelCommonCompatibility extends RPBChessboardAbstractModel {
 	 */
 	public function getNoConflictForButton() {
 		if ( ! isset( self::$noConflictForButton ) ) {
-			$value                     = RPBChessboardHelperValidation::validateBooleanFromInt( get_option( 'rpbchessboard_noConflictForButton' ) );
+			$value                     = RPBChessboardHelperValidation::validate_boolean_from_int( get_option( 'rpbchessboard_noConflictForButton' ) );
 			self::$noConflictForButton = isset( $value ) ? $value : false;
 		}
 		return self::$noConflictForButton;

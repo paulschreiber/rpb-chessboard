@@ -70,6 +70,6 @@ class RPBChessboardModelPostThemingPieceset extends RPBChessboardModelPostThemin
 	 */
 	private static function getImageId( $coloredPiece ) {
 		$key = 'imageId-' . $coloredPiece;
-		return isset( $_POST[ $key ] ) ? RPBChessboardHelperValidation::validateInteger( $_POST[ $key ] ) : null;
+		return isset( $_POST[ $key ] ) ? RPBChessboardHelperValidation::validate_integer( $_POST[ $key ] ) : null;
 	}
 }

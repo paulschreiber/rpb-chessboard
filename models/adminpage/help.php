@@ -28,9 +28,9 @@ require_once RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php';
  */
 class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPage {
 
-	private $squareSizeList;
+	private $square_size_list;
 	private $animationSpeedList;
-	private $pieceSymbolCustomValues;
+	private $piece_symbol_custom_values;
 
 
 	public function __construct() {
@@ -66,18 +66,18 @@ class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPag
 	 *
 	 * @return int[]
 	 */
-	public function getSquareSizeList() {
-		if ( ! isset( $this->squareSizeList ) ) {
+	public function get_square_size_list() {
+		if ( ! isset( $this->square_size_list ) ) {
 			$defaultSquareSize = $this->getDefaultSquareSize();
 			if ( $defaultSquareSize <= 24 ) {
-				$this->squareSizeList = array( $defaultSquareSize, 35, 56 );
+				$this->square_size_list = array( $defaultSquareSize, 35, 56 );
 			} elseif ( $defaultSquareSize <= 48 ) {
-				$this->squareSizeList = array( 16, $defaultSquareSize, 56 );
+				$this->square_size_list = array( 16, $defaultSquareSize, 56 );
 			} else {
-				$this->squareSizeList = array( 16, 35, $defaultSquareSize );
+				$this->square_size_list = array( 16, 35, $defaultSquareSize );
 			}
 		}
-		return $this->squareSizeList;
+		return $this->square_size_list;
 	}
 
 
@@ -85,8 +85,8 @@ class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPag
 	 * Return the initial square size value to use for the square size attribute presentation section.
 	 */
 	public function getSquareSizeInitialExample() {
-		$squareSizeList = $this->getSquareSizeList();
-		return $squareSizeList[1];
+		$square_size_list = $this->get_square_size_list();
+		return $square_size_list[1];
 	}
 
 
@@ -117,10 +117,10 @@ class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPag
 	 * @return string
 	 */
 	public function getPieceSymbolCustomValue( $piece = null ) {
-		if ( ! isset( $this->pieceSymbolCustomValues ) ) {
-			$this->pieceSymbolCustomValues = $this->getDefaultPieceSymbolCustomValues();
-			if ( empty( $this->pieceSymbolCustomValues ) ) {
-				$this->pieceSymbolCustomValues = array(
+		if ( ! isset( $this->piece_symbol_custom_values ) ) {
+			$this->piece_symbol_custom_values = $this->getDefaultPieceSymbolCustomValues();
+			if ( empty( $this->piece_symbol_custom_values ) ) {
+				$this->piece_symbol_custom_values = array(
 					'K' => 'K',
 					'Q' => 'D',
 					'R' => 'T',
@@ -130,7 +130,7 @@ class RPBChessboardModelAdminPageHelp extends RPBChessboardAbstractModelAdminPag
 				);
 			}
 		}
-		$t = $this->pieceSymbolCustomValues;
+		$t = $this->piece_symbol_custom_values;
 		return $piece === null ? $t['K'] . $t['Q'] . $t['R'] . $t['B'] . $t['N'] . $t['P'] : $t[ $piece ];
 	}
 }

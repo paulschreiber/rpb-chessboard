@@ -33,7 +33,7 @@ class RPBChessboardModelCommonDefaultOptionsEx extends RPBChessboardAbstractMode
 	private static $availablePiecesets;
 	private static $pieceSymbolLocalizationAvailable;
 	private static $simplifiedPieceSymbols;
-	private static $pieceSymbolCustomValues;
+	private static $piece_symbol_custom_values;
 
 	private static $BUILTIN_COLORSETS = array(
 		'coral'      => 'Coral',
@@ -269,10 +269,10 @@ class RPBChessboardModelCommonDefaultOptionsEx extends RPBChessboardAbstractMode
 	 * @return array
 	 */
 	public function getDefaultPieceSymbolCustomValues() {
-		if ( ! isset( self::$pieceSymbolCustomValues ) ) {
+		if ( ! isset( self::$piece_symbol_custom_values ) ) {
 			if ( $this->getDefaultSimplifiedPieceSymbols() === 'custom' ) {
 				$pieceSymbols                  = $this->getDefaultPieceSymbols();
-				self::$pieceSymbolCustomValues = array(
+				self::$piece_symbol_custom_values = array(
 					'K' => substr( $pieceSymbols, 1, 1 ),
 					'Q' => substr( $pieceSymbols, 2, 1 ),
 					'R' => substr( $pieceSymbols, 3, 1 ),
@@ -281,9 +281,9 @@ class RPBChessboardModelCommonDefaultOptionsEx extends RPBChessboardAbstractMode
 					'P' => substr( $pieceSymbols, 6, 1 ),
 				);
 			} else {
-				self::$pieceSymbolCustomValues = array();
+				self::$piece_symbol_custom_values = array();
 			}
 		}
-		return self::$pieceSymbolCustomValues;
+		return self::$piece_symbol_custom_values;
 	}
 }

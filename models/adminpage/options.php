@@ -28,7 +28,7 @@ require_once RPBCHESSBOARD_ABSPATH . 'models/abstract/adminpage.php';
  */
 class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdminPage {
 
-	private $pieceSymbolCustomValues;
+	private $piece_symbol_custom_values;
 
 
 	public function __construct() {
@@ -104,10 +104,10 @@ class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdmin
 	 * @return string
 	 */
 	public function getPieceSymbolCustomValue( $piece ) {
-		if ( ! isset( $this->pieceSymbolCustomValues ) ) {
-			$this->pieceSymbolCustomValues = $this->getDefaultPieceSymbolCustomValues();
-			if ( empty( $this->pieceSymbolCustomValues ) ) {
-				$this->pieceSymbolCustomValues = array(
+		if ( ! isset( $this->piece_symbol_custom_values ) ) {
+			$this->piece_symbol_custom_values = $this->getDefaultPieceSymbolCustomValues();
+			if ( empty( $this->piece_symbol_custom_values ) ) {
+				$this->piece_symbol_custom_values = array(
 					'K' => '',
 					'Q' => '',
 					'R' => '',
@@ -117,6 +117,6 @@ class RPBChessboardModelAdminPageOptions extends RPBChessboardAbstractModelAdmin
 				);
 			}
 		}
-		return $this->pieceSymbolCustomValues[ $piece ];
+		return $this->piece_symbol_custom_values[ $piece ];
 	}
 }

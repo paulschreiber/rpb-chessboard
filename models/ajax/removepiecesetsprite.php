@@ -34,9 +34,9 @@ class RPBChessboardModelAjaxRemovePiecesetSprite extends RPBChessboardAbstractMo
 	}
 
 
-	public function run( $attachmentId ) {
+	public function run( $attachment_id ) {
 
-		$path       = get_attached_file( $attachmentId );
+		$path       = get_attached_file( $attachment_id );
 		$spritePath = $this->computeCustomPiecesetSpritePathOrURL( $path );
 
 		if ( file_exists( $spritePath ) ) {

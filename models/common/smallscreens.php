@@ -46,7 +46,7 @@ class RPBChessboardModelCommonSmallScreens extends RPBChessboardAbstractModel {
 	 */
 	public function getSmallScreenCompatibility() {
 		if ( ! isset( self::$smallScreenCompatibility ) ) {
-			$value                          = RPBChessboardHelperValidation::validateBooleanFromInt( get_option( 'rpbchessboard_smallScreenCompatibility' ) );
+			$value                          = RPBChessboardHelperValidation::validate_boolean_from_int( get_option( 'rpbchessboard_smallScreenCompatibility' ) );
 			self::$smallScreenCompatibility = isset( $value ) ? $value : true;
 		}
 		return self::$smallScreenCompatibility;
@@ -72,7 +72,7 @@ class RPBChessboardModelCommonSmallScreens extends RPBChessboardAbstractModel {
 	private static function loadSmallScreenModes() {
 
 		// Load the raw data
-		$data = RPBChessboardHelperValidation::validateSmallScreenModes( get_option( 'rpbchessboard_smallScreenModes' ) );
+		$data = RPBChessboardHelperValidation::validate_small_screen_modes( get_option( 'rpbchessboard_smallScreenModes' ) );
 		$data = isset( $data ) ? $data : array(
 			240 => (object) array(
 				'squareSize'      => 18,
@@ -95,11 +95,11 @@ class RPBChessboardModelCommonSmallScreens extends RPBChessboardAbstractModel {
 		// Format the mode entries
 		self::$smallScreenModes   = array();
 		$previousScreenWidthBound = 0;
-		foreach ( $data as $screenWidthBound => $mode ) {
+		foreach ( $data as $screen_width_bound => $mode ) {
 			$mode->minScreenWidth = $previousScreenWidthBound;
-			$mode->maxScreenWidth = $screenWidthBound;
+			$mode->maxScreenWidth = $screen_width_bound;
 			array_push( self::$smallScreenModes, $mode );
-			$previousScreenWidthBound = $screenWidthBound;
+			$previousScreenWidthBound = $screen_width_bound;
 		}
 	}
 
@@ -158,51 +158,51 @@ class RPBChessboardModelCommonSmallScreens extends RPBChessboardAbstractModel {
 
 
 	/**
-	 * Return the background-position x-offset to use for sprites having size `$squareSize`.
+	 * Return the background-position x-offset to use for sprites having size `$square_size`.
 	 *
-	 * @param int $squareSize
+	 * @param int $square_size
 	 * @return int
 	 */
-	public function getBackgroundPositionXForSquareSize( $squareSize ) {
-		if ( $squareSize <= 32 ) {
-			// delta_x = - sum (k = $squareSize + 1 to 32) { k }
-			return - ( $squareSize + 33 ) * ( 32 - $squareSize ) / 2;
+	public function getBackgroundPositionXForSquareSize( $square_size ) {
+		if ( $square_size <= 32 ) {
+			// delta_x = - sum (k = $square_size + 1 to 32) { k }
+			return - ( $square_size + 33 ) * ( 32 - $square_size ) / 2;
 		} else {
-			// delta_x = - sum (k = 33 to $squareSize - 1) { k }
-			return - ( $squareSize + 32 ) * ( $squareSize - 33 ) / 2;
+			// delta_x = - sum (k = 33 to $square_size - 1) { k }
+			return - ( $square_size + 32 ) * ( $square_size - 33 ) / 2;
 		}
 	}
 
 
 	/**
-	 * Return the background-position y-offset to use for sprites having size `$squareSize`.
+	 * Return the background-position y-offset to use for sprites having size `$square_size`.
 	 *
-	 * @param int $squareSize
+	 * @param int $square_size
 	 * @return int
 	 */
-	public function getBackgroundPositionYForSquareSize( $squareSize ) {
-		return $squareSize <= 32 ? $squareSize - 65 : 0;
+	public function getBackgroundPositionYForSquareSize( $square_size ) {
+		return $square_size <= 32 ? $square_size - 65 : 0;
 	}
 
 
 	/**
 	 * Return the height and width to use for the annotation layer when using the given square size.
 	 *
-	 * @param int $squareSize
+	 * @param int $square_size
 	 * @return int
 	 */
-	public function getHeightWidthForAnnotationLayer( $squareSize ) {
-		return $squareSize * 8;
+	public function getHeightWidthForAnnotationLayer( $square_size ) {
+		return $square_size * 8;
 	}
 
 
 	/**
 	 * Return the x-offset (from right) to use for the annotation layer when using the given square size.
 	 *
-	 * @param int $squareSize
+	 * @param int $square_size
 	 * @return int
 	 */
-	public function getRightForAnnotationLayer( $squareSize ) {
-		return $squareSize + 8;
+	public function getRightForAnnotationLayer( $square_size ) {
+		return $square_size + 8;
 	}
 }

@@ -28,9 +28,9 @@ require_once RPBCHESSBOARD_ABSPATH . 'models/abstract/abstractmodel.php';
  */
 abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstractModel {
 
-	private $adminPageName;
+	private $admin_page_name;
 	private $title;
-	private $subPages;
+	private $sub_pages;
 	private $defaultSubPageName;
 	private $selectedSubPageName;
 	private static $postMessage;
@@ -48,7 +48,7 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	 * Return the name of the template associated to the current sub-page.
 	 */
 	public function getSubPageTemplateName() {
-		return isset( $this->subPages ) ? 'AdminPage/' . $this->getAdminPageName() . '/' . $this->getSelectedSubPageName() : '';
+		return isset( $this->sub_pages ) ? 'AdminPage/' . $this->getAdminPageName() . '/' . $this->getSelectedSubPageName() : '';
 	}
 
 
@@ -58,10 +58,10 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	 * @return string
 	 */
 	public function getAdminPageName() {
-		if ( ! isset( $this->adminPageName ) ) {
-			$this->adminPageName = preg_match( '/^AdminPage(.*)$/', $this->getModelName(), $m ) ? $m[1] : '';
+		if ( ! isset( $this->admin_page_name ) ) {
+			$this->admin_page_name = preg_match( '/^AdminPage(.*)$/', $this->get_model_name(), $m ) ? $m[1] : '';
 		}
-		return $this->adminPageName;
+		return $this->admin_page_name;
 	}
 
 
@@ -84,7 +84,7 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	 * @return boolean
 	 */
 	public function hasSubPages() {
-		return isset( $this->subPages );
+		return isset( $this->sub_pages );
 	}
 
 
@@ -112,7 +112,7 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	 */
 	public function getSubPages() {
 		$this->initializeSelectedSubPageInfo();
-		return isset( $this->subPages ) ? $this->subPages : array();
+		return isset( $this->sub_pages ) ? $this->sub_pages : array();
 	}
 
 
@@ -124,8 +124,8 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	 */
 	public function getSubPage( $name ) {
 		$this->initializeSelectedSubPageInfo();
-		if ( isset( $this->subPages ) ) {
-			foreach ( $this->subPages as $subPage ) {
+		if ( isset( $this->sub_pages ) ) {
+			foreach ( $this->sub_pages as $subPage ) {
 				if ( $name === $subPage->name ) {
 					return $subPage;
 				}
@@ -146,12 +146,12 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 
 		// Regular case => use the GET parameter `subpage` or the default subpage name
 		// to determine the currently selected sub-page.
-		if ( isset( $this->subPages ) ) {
+		if ( isset( $this->sub_pages ) ) {
 			$selectedSubPageFromGET    = isset( $_GET['subpage'] ) ? $this->validateSubPageName( $_GET['subpage'] ) : null;
 			$this->selectedSubPageName = isset( $selectedSubPageFromGET ) ? $selectedSubPageFromGET : $this->defaultSubPageName;
 
 			// Update the `selected` flags in the sub-page list.
-			foreach ( $this->subPages as $subPage ) {
+			foreach ( $this->sub_pages as $subPage ) {
 				$subPage->selected = ( $this->selectedSubPageName === $subPage->name );
 			}
 		} // Fallback case if no sub-page exists.
@@ -168,9 +168,9 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	 * @return string `null` if the input is not a valid sub-page name.
 	 */
 	private function validateSubPageName( $name ) {
-		if ( isset( $this->subPages ) ) {
+		if ( isset( $this->sub_pages ) ) {
 			$name = strtolower( $name );
-			foreach ( $this->subPages as $subPage ) {
+			foreach ( $this->sub_pages as $subPage ) {
 				if ( $name === strtolower( $subPage->name ) ) {
 					return $subPage->name;
 				}
@@ -190,12 +190,12 @@ abstract class RPBChessboardAbstractModelAdminPage extends RPBChessboardAbstract
 	protected function addSubPage( $name, $label, $default = false ) {
 
 		// Initialize the sub-page array.
-		if ( ! isset( $this->subPages ) ) {
-			$this->subPages = array();
+		if ( ! isset( $this->sub_pages ) ) {
+			$this->sub_pages = array();
 		}
 
 		// Push the new-page at the end of the sub-page list.
-		$this->subPages[] = (object) array(
+		$this->sub_pages[] = (object) array(
 			'name'  => $name,
 			'label' => $label,
 			'link'  => self::makeSubPageLink( $name ),

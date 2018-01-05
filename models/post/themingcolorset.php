@@ -64,6 +64,6 @@ class RPBChessboardModelPostThemingColorset extends RPBChessboardModelPostThemin
 	 */
 	private static function getSquareColor( $darkOrLight ) {
 		$key = $darkOrLight . 'SquareColor';
-		return isset( $_POST[ $key ] ) ? RPBChessboardHelperValidation::validateColor( $_POST[ $key ] ) : null;
+		return isset( $_POST[ $key ] ) ? RPBChessboardHelperValidation::validate_color( $_POST[ $key ] ) : null;
 	}
 }

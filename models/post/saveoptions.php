@@ -82,7 +82,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 
 	private static function processSquareSize() {
 		if ( isset( $_POST['squareSize'] ) ) {
-			$value = RPBChessboardHelperValidation::validateSquareSize( $_POST['squareSize'] );
+			$value = RPBChessboardHelperValidation::validate_square_size( $_POST['squareSize'] );
 			if ( isset( $value ) ) {
 				update_option( 'rpbchessboard_squareSize', $value );
 			}
@@ -92,7 +92,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 
 	private static function processDiagramAlignment() {
 		if ( isset( $_POST['diagramAlignment'] ) ) {
-			$value = RPBChessboardHelperValidation::validateDiagramAlignment( $_POST['diagramAlignment'] );
+			$value = RPBChessboardHelperValidation::validate_diagram_alignment( $_POST['diagramAlignment'] );
 			if ( isset( $value ) ) {
 				update_option( 'rpbchessboard_diagramAlignment', $value );
 			}
@@ -110,7 +110,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 
 	private static function processNavigationBoard() {
 		if ( isset( $_POST['navigationBoard'] ) ) {
-			$value = RPBChessboardHelperValidation::validateNavigationBoard( $_POST['navigationBoard'] );
+			$value = RPBChessboardHelperValidation::validate_navigation_board( $_POST['navigationBoard'] );
 			if ( isset( $value ) ) {
 				update_option( 'rpbchessboard_navigationBoard', $value );
 			}
@@ -120,7 +120,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 
 	private static function processAnimationSpeed() {
 		if ( isset( $_POST['animationSpeed'] ) ) {
-			$value = RPBChessboardHelperValidation::validateAnimationSpeed( $_POST['animationSpeed'] );
+			$value = RPBChessboardHelperValidation::validate_animation_speed( $_POST['animationSpeed'] );
 			if ( isset( $value ) ) {
 				update_option( 'rpbchessboard_animationSpeed', $value );
 			}
@@ -138,7 +138,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 
 	private static function processSetCodeParameter( $key ) {
 		if ( isset( $_POST[ $key ] ) ) {
-			$value = RPBChessboardHelperValidation::validateSetCode( $_POST[ $key ] );
+			$value = RPBChessboardHelperValidation::validate_set_code( $_POST[ $key ] );
 			if ( isset( $value ) ) {
 				update_option( 'rpbchessboard_' . $key, $value );
 				return true;
@@ -150,7 +150,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 
 	private static function processBooleanParameter( $key ) {
 		if ( isset( $_POST[ $key ] ) ) {
-			$value = RPBChessboardHelperValidation::validateBooleanFromInt( $_POST[ $key ] );
+			$value = RPBChessboardHelperValidation::validate_boolean_from_int( $_POST[ $key ] );
 			if ( isset( $value ) ) {
 				update_option( 'rpbchessboard_' . $key, $value ? 1 : 0 );
 			}
@@ -201,7 +201,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 	 * @return string
 	 */
 	private static function loadPieceSymbol( $fieldName ) {
-		return isset( $_POST[ $fieldName ] ) ? RPBChessboardHelperValidation::validatePieceSymbol( $_POST[ $fieldName ] ) : null;
+		return isset( $_POST[ $fieldName ] ) ? RPBChessboardHelperValidation::validate_piece_symbol( $_POST[ $fieldName ] ) : null;
 	}
 
 
@@ -215,7 +215,7 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 			return null;
 		}
 
-		$smallScreenModeCount = RPBChessboardHelperValidation::validateInteger( $_POST['smallScreenModes'], 0 );
+		$smallScreenModeCount = RPBChessboardHelperValidation::validate_integer( $_POST['smallScreenModes'], 0 );
 		$smallScreenModes     = array();
 		for ( $index = 0; $index < $smallScreenModeCount; ++$index ) {
 			$smallScreenMode = self::loadSmallScreenMode( $index );
@@ -234,15 +234,15 @@ class RPBChessboardModelPostSaveOptions extends RPBChessboardAbstractModel {
 	 * @return string
 	 */
 	private static function loadSmallScreenMode( $index ) {
-		$screenWidthKey     = 'smallScreenMode' . $index . '-screenWidth';
-		$squareSizeKey      = 'smallScreenMode' . $index . '-squareSize';
-		$hideCoordinatesKey = 'smallScreenMode' . $index . '-hideCoordinates';
-		if ( isset( $_POST[ $screenWidthKey ] ) && isset( $squareSizeKey ) && isset( $hideCoordinatesKey ) ) {
-			$screenWidth     = RPBChessboardHelperValidation::validateInteger( $_POST[ $screenWidthKey    ], 1 );
-			$squareSize      = RPBChessboardHelperValidation::validateSquareSize( $_POST[ $squareSizeKey     ] );
-			$hideCoordinates = RPBChessboardHelperValidation::validateBooleanFromInt( $_POST[ $hideCoordinatesKey ] );
-			if ( isset( $screenWidth ) && isset( $squareSize ) && isset( $hideCoordinates ) ) {
-				return $screenWidth . ':' . $squareSize . ':' . ( $hideCoordinates ? 'true' : 'false' );
+		$screen_width_key     = 'smallScreenMode' . $index . '-screenWidth';
+		$square_size_key      = 'smallScreenMode' . $index . '-squareSize';
+		$hide_coordinates_key = 'smallScreenMode' . $index . '-hideCoordinates';
+		if ( isset( $_POST[ $screen_width_key ] ) && isset( $square_size_key ) && isset( $hide_coordinates_key ) ) {
+			$screen_width     = RPBChessboardHelperValidation::validate_integer( $_POST[ $screen_width_key ], 1 );
+			$square_size      = RPBChessboardHelperValidation::validate_square_size( $_POST[ $square_size_key ] );
+			$hide_coordinates = RPBChessboardHelperValidation::validate_boolean_from_int( $_POST[ $hide_coordinates_key ] );
+			if ( isset( $screen_width ) && isset( $square_size ) && isset( $hide_coordinates ) ) {
+				return $screen_width . ':' . $square_size . ':' . ( $hide_coordinates ? 'true' : 'false' );
 			}
 		}
 		return null;

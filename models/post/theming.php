@@ -39,13 +39,13 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 
 
 	public function add() {
-		$setCode = $this->getNewSetCode();
+		$set_code = $this->getNewSetCode();
 
 		// Update attributes and list of custom set-codes.
-		if ( ! ( $this->processLabel( $setCode ) && $this->processAttributes( $setCode ) ) ) {
+		if ( ! ( $this->processLabel( $set_code ) && $this->processAttributes( $set_code ) ) ) {
 			return null;
 		}
-		$this->updateCustomSetCodes( array_merge( $this->getCustomSetCodes(), array( $setCode ) ) );
+		$this->updateCustomSetCodes( array_merge( $this->getCustomSetCodes(), array( $set_code ) ) );
 
 		// Force cache refresh.
 		self::invalidateCache();
@@ -55,13 +55,13 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 
 
 	public function edit() {
-		$setCode = $this->getSetCode();
-		if ( ! isset( $setCode ) ) {
+		$set_code = $this->getSetCode();
+		if ( ! isset( $set_code ) ) {
 			return null;
 		}
 
-		$this->processLabel( $setCode );
-		$this->processAttributes( $setCode );
+		$this->processLabel( $set_code );
+		$this->processAttributes( $set_code );
 		self::invalidateCache();
 
 		return $this->getEditionSuccessMessage();
@@ -69,31 +69,31 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 
 
 	public function delete() {
-		$setCode = $this->getSetCode();
-		if ( ! isset( $setCode ) ) {
+		$set_code = $this->getSetCode();
+		if ( ! isset( $set_code ) ) {
 			return null;
 		}
 
 		// Remove the set-code from the database.
-		$this->updateCustomSetCodes( array_diff( $this->getCustomSetCodes(), array( $setCode ) ) );
+		$this->updateCustomSetCodes( array_diff( $this->getCustomSetCodes(), array( $set_code ) ) );
 
 		// Reset default set-code if it corresponds to the set-code being deleted.
-		if ( $setCode === $this->getDefaultSetCode() ) {
+		if ( $set_code === $this->getDefaultSetCode() ) {
 			delete_option( 'rpbchessboard_' . $this->getManagedSetCode() );
 		}
 
 		// Cleanup the database and the cache.
-		delete_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . '_label_' . $setCode );
-		delete_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . '_attributes_' . $setCode );
+		delete_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . '_label_' . $set_code );
+		delete_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . '_attributes_' . $set_code );
 		self::invalidateCache();
 
 		return $this->getDeletionSuccessMessage();
 	}
 
 
-	private function processLabel( $setCode ) {
+	private function processLabel( $set_code ) {
 		if ( isset( $_POST['label'] ) ) {
-			update_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . '_label_' . $setCode, $_POST['label'] );
+			update_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . '_label_' . $set_code, $_POST['label'] );
 			return true;
 		}
 		return false;
@@ -105,11 +105,11 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	 *
 	 * @return `true` if the attributes are successfully set, `false` otherwise.
 	 */
-	abstract protected function processAttributes( $setCode);
+	abstract protected function processAttributes( $set_code);
 
 
-	private function updateCustomSetCodes( $setCodes ) {
-		update_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . 's', implode( '|', $setCodes ) );
+	private function updateCustomSetCodes( $set_codes ) {
+		update_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . 's', implode( '|', $set_codes ) );
 	}
 
 
@@ -121,8 +121,8 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	/**
 	 * Check whether the given set-code represents an existing custom theming set or not.
 	 */
-	private function isCustomSetCode( $setCode ) {
-		return in_array( $setCode, $this->getCustomSetCodes() );
+	private function isCustomSetCode( $set_code ) {
+		return in_array( $set_code, $this->getCustomSetCodes() );
 	}
 
 
@@ -131,7 +131,7 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	 */
 	private function getCustomSetCodes() {
 		if ( ! isset( $this->customSetCodes ) ) {
-			$result               = RPBChessboardHelperValidation::validateSetCodeList( get_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . 's' ) );
+			$result               = RPBChessboardHelperValidation::validate_set_code_list( get_option( 'rpbchessboard_custom_' . $this->getManagedSetCode() . 's' ) );
 			$this->customSetCodes = isset( $result ) ? $result : array();
 		}
 		return $this->customSetCodes;
@@ -142,7 +142,7 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	 * Retrieve the set-code used by default, if any.
 	 */
 	private function getDefaultSetCode() {
-		return RPBChessboardHelperValidation::validateSetCode( get_option( 'rpbchessboard_' . $this->getManagedSetCode() ) );
+		return RPBChessboardHelperValidation::validate_set_code( get_option( 'rpbchessboard_' . $this->getManagedSetCode() ) );
 	}
 
 
@@ -151,11 +151,11 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	 */
 	private function getSetCode() {
 		$managedSetCode = $this->getManagedSetCode();
-		$setCode        = isset( $_POST[ $managedSetCode ] ) ? RPBChessboardHelperValidation::validateSetCode( $_POST[ $managedSetCode ] ) : null;
-		if ( isset( $setCode ) && ! $this->isCustomSetCode( $setCode ) ) {
+		$set_code        = isset( $_POST[ $managedSetCode ] ) ? RPBChessboardHelperValidation::validate_set_code( $_POST[ $managedSetCode ] ) : null;
+		if ( isset( $set_code ) && ! $this->isCustomSetCode( $set_code ) ) {
 			return null;
 		}
-		return $setCode;
+		return $set_code;
 	}
 
 
@@ -164,28 +164,28 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	 */
 	private function getNewSetCode() {
 		$managedSetCode = $this->getManagedSetCode();
-		$setCode        = isset( $_POST[ $managedSetCode ] ) ? $_POST[ $managedSetCode ] : '';
-		if ( trim( $setCode ) === '' && isset( $_POST['label'] ) ) {
-			$setCode = $_POST['label'];
+		$set_code        = isset( $_POST[ $managedSetCode ] ) ? $_POST[ $managedSetCode ] : '';
+		if ( trim( $set_code ) === '' && isset( $_POST['label'] ) ) {
+			$set_code = $_POST['label'];
 		}
 
 		// Convert all upper case to lower case, spaces to '-', and remove the rest.
-		$setCode = strtolower( $setCode );
-		$setCode = preg_replace( '/\s/', '-', $setCode );
-		$setCode = preg_replace( '/[^a-z0-9\-]/', '', $setCode );
+		$set_code = strtolower( $set_code );
+		$set_code = preg_replace( '/\s/', '-', $set_code );
+		$set_code = preg_replace( '/[^a-z0-9\-]/', '', $set_code );
 
 		// Concat consecutive '-', and trim the result.
-		$setCode = preg_replace( '/-+/', '-', $setCode );
-		$setCode = trim( $setCode, '-' );
+		$set_code = preg_replace( '/-+/', '-', $set_code );
+		$set_code = trim( $set_code, '-' );
 
 		// Ensure that the result is valid and not already used for another set-code.
 		$counter = 1;
-		$base    = $setCode === '' ? $managedSetCode : $setCode;
-		$setCode = $setCode === '' ? $managedSetCode . '-1' : $setCode;
-		while ( $this->isCustomSetCode( $setCode ) || $this->isBuiltinSetCode( $setCode ) ) {
-			$setCode = $base . '-' . ( $counter++ );
+		$base    = $set_code === '' ? $managedSetCode : $set_code;
+		$set_code = $set_code === '' ? $managedSetCode . '-1' : $set_code;
+		while ( $this->isCustomSetCode( $set_code ) || $this->isBuiltinSetCode( $set_code ) ) {
+			$set_code = $base . '-' . ( $counter++ );
 		}
-		return $setCode;
+		return $set_code;
 	}
 
 
@@ -198,7 +198,7 @@ abstract class RPBChessboardModelPostTheming extends RPBChessboardAbstractModel 
 	/**
 	 * Whether the given set-code corresponds to a builtin colorset or pieceset.
 	 */
-	abstract protected function isBuiltinSetCode( $setCode);
+	abstract protected function isBuiltinSetCode( $set_code);
 
 
 	/**

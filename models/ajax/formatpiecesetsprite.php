@@ -113,7 +113,7 @@ class RPBChessboardModelAjaxFormatPiecesetSprite extends RPBChessboardAbstractMo
 
 
 	private static function getAttachment() {
-		$attachmentId = isset( $_POST['attachmentId'] ) ? RPBChessboardHelperValidation::validateInteger( $_POST['attachmentId'], 0 ) : null;
+		$attachmentId = isset( $_POST['attachmentId'] ) ? RPBChessboardHelperValidation::validate_integer( $_POST['attachmentId'], 0 ) : null;
 		if ( ! isset( $attachmentId ) ) {
 			return null;
 		}
