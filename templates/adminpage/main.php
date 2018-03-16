@@ -27,9 +27,7 @@
 	<noscript>
 		<div class="error">
 			<p>
-			<?php
-				esc_html_e( 'To work properly, the RPB Chessboard plugin needs JavaScript to be activated in your browser.', 'rpb-chessboard' );
-			?>
+				<?php esc_html_e( 'To work properly, the RPB Chessboard plugin needs JavaScript to be activated in your browser.', 'rpb-chessboard' ); ?>
 			</p>
 		</div>
 	</noscript>

@@ -28,26 +28,18 @@ if ( ! $model->getSmallScreenCompatibility() ) {
 ?>
 
 <?php foreach ( $model->getSmallScreenModes() as $mode ) : ?>
-<?php
-	$smallScreenData = $model->getSmallScreenModeMainData( $mode );
-	if ( $smallScreenData['min'] ) { ?>
-		@media all and (max-width: <?php echo intval( $smallScreenData['max'] ) ?>px and (min-width: <?php echo intval( $smallScreenData['min'] ) ?>px {
-	<?php } else { ?>
-		@media all and (max-width: <?php echo intval( $smallScreenData['max'] ) ?>px {
-	<?php } ?>
+<?php echo $model->getSanitizedMainSelector( $mode ); ?> {
 
-	<?php if ( $model->hasSmallScreenSizeSquareSizeSection( $mode ) ) : ?>
+	<?php if ( $model->hasSquareSizeSection( $mode ) ) : ?>
 
-	<?php
-		RPBChessboardModelCommonSmallScreens::printSelectorList( $model->getSmallScreenModeSquareSizeSelectorList( $mode ) ); ?> {
+	<?php echo $model->getSanitizedSquareSizeSelector( $mode ); ?> {
 		min-width: <?php echo intval( $mode->squareSize ); ?>px;
 		width    : <?php echo intval( $mode->squareSize ); ?>px;
 		height   : <?php echo intval( $mode->squareSize ); ?>px;
 		background-position: <?php echo intval( $model->getBackgroundPositionXForSquareSize( $mode->squareSize ) ); ?>px <?php echo intval( $model->getBackgroundPositionYForSquareSize( $mode->squareSize ) ); ?>px;
 	}
 
-	<?php
-		RPBChessboardModelCommonSmallScreens::printSelectorList( $model->getSmallScreenModeAnnotationLayerSelectorList( $mode ) ); ?> {
+	<?php echo $model->getSanitizedAnnotationLayerSelector( $mode ); ?> {
 		width : <?php echo intval( $model->getHeightWidthForAnnotationLayer( $mode->squareSize ) ); ?>px;
 		height: <?php echo intval( $model->getHeightWidthForAnnotationLayer( $mode->squareSize ) ); ?>px;
 		right : <?php echo intval( $model->getRightForAnnotationLayer( $mode->squareSize ) ); ?>px;
