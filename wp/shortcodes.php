@@ -54,11 +54,13 @@ abstract class RPBChessboardShortcodes {
 
 
 	public static function callbackShortcodeFEN( $atts, $content ) {
+		RPBChessboardScripts::$add_script = true;
 		return self::runShortcode( 'FEN', false, $atts, $content );
 	}
 
 
 	public static function callbackShortcodePGN( $atts, $content ) {
+		RPBChessboardScripts::$add_script = true;
 		return self::runShortcode( 'PGN', true, $atts, $content );
 	}
 
@@ -67,6 +69,7 @@ abstract class RPBChessboardShortcodes {
 	 * Legacy support of the `[pgndiagram]` shortcode.
 	 */
 	public static function callbackShortcodePGNDiagram( $atts, $content ) {
+		RPBChessboardScripts::$add_script = true;
 		return '[#]';
 	}
 

@@ -29,6 +29,10 @@
 abstract class RPBChessboardStyleSheets {
 
 	public static function register() {
+		if ( ! RPBChessboardScripts::$add_script ) {
+			return;
+		}
+
 		// jQuery
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 		wp_enqueue_style( 'rpbchessboard-jquery-ui-smoothness', RPBCHESSBOARD_URL . 'third-party-libs/jquery/jquery-ui.smoothness.min.css', false, '1.11.4' );

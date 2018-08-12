@@ -28,6 +28,8 @@
  */
 abstract class RPBChessboardScripts {
 
+	public static $add_script;
+
 	public static function register() {
 		$ext = self::getJSFileExtension();
 
@@ -76,8 +78,10 @@ abstract class RPBChessboardScripts {
 		);
 
 		// Enqueue the scripts.
-		wp_enqueue_script( 'rpbchessboard-chessboard' );
-		wp_enqueue_script( 'rpbchessboard-chessgame' );
+		if ( self::$add_script ) {
+			wp_enqueue_script( 'rpbchessboard-chessboard' );
+			wp_enqueue_script( 'rpbchessboard-chessgame' );
+		}
 
 		// Additional scripts for the backend.
 		if ( is_admin() ) {
